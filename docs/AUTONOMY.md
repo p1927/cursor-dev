@@ -9,3 +9,5 @@ From the **parent repo root** (directory that contains `volcano/`):
 - Push **this** repo after tests: **`../../scripts/push-cursor-dev.sh "message"`**
 
 If you cloned **only** `cursor-dev`, you still have AgentMesh; run `./agentmesh/test_integration.sh` and push as usual — full worker/Mesh automation requires the VOLCANO layout.
+
+Mesh port/DB for the VOLCANO wrapper are **`VOLCANO_MESH_PORT`** (default 8766) and **`VOLCANO_MESH_DB`** — see parent **`../AUTONOMY.md`**.
