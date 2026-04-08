@@ -27,6 +27,14 @@ Read-only audit of the **autoBottle** workspace (parent monorepo containing `age
 | BUG-17 | [05-agent-executors-runner-audit.md](./05-agent-executors-runner-audit.md) | Task queue `step_states` parse failure wipes all steps |
 | BUG-18 | [05-agent-executors-runner-audit.md](./05-agent-executors-runner-audit.md) | Executor-gateway `Popen` child not waited (reaping unclear) |
 | BUG-19 | [05-agent-executors-runner-audit.md](./05-agent-executors-runner-audit.md) | Runner `ServiceLauncher` doc says shell; uses `shlex`+exec |
+| BUG-20 | [04-autonomous-os-deep-audit.md#bug-20--auto-fixer-restart-fallback-uses-overly-broad-pkill](./04-autonomous-os-deep-audit.md#bug-20--auto-fixer-restart-fallback-uses-overly-broad-pkill) | Auto-fixer `pkill -f "python3 main.py"` can kill unrelated processes |
+| BUG-21 | [04-autonomous-os-deep-audit.md#bug-21--doctor-update-rollback-executes-persisted-rollback_cmd-via-shelltrue](./04-autonomous-os-deep-audit.md#bug-21--doctor-update-rollback-executes-persisted-rollback_cmd-via-shelltrue) | Doctor runs persisted `rollback_cmd` with `shell=True` (injection risk) |
+| BUG-22 | [04-autonomous-os-deep-audit.md#bug-22--update-applier-runs-all-layer-commands-through-shelltrue](./04-autonomous-os-deep-audit.md#bug-22--update-applier-runs-all-layer-commands-through-shelltrue) | Update applier uses `shell=True` for all layer commands |
+| BUG-23 | [04-autonomous-os-deep-audit.md#bug-23--fix-feedback-loop-marks-success-when-pattern-row-is-missing](./04-autonomous-os-deep-audit.md#bug-23--fix-feedback-loop-marks-success-when-pattern-row-is-missing) | `close_loop` treats missing pattern row as fix success |
+| BUG-24 | [04-autonomous-os-deep-audit.md#bug-24--openrouter-blocked-prefix-normalization-is-a-no-op](./04-autonomous-os-deep-audit.md#bug-24--openrouter-blocked-prefix-normalization-is-a-no-op) | OpenRouter prefix ternary never normalizes slashes |
+| BUG-25 | [04-autonomous-os-deep-audit.md#bug-25--guarded-http-client-skips-outbound-secret-scan-for-non-dict-bodies](./04-autonomous-os-deep-audit.md#bug-25--guarded-http-client-skips-outbound-secret-scan-for-non-dict-bodies) | `GuardedHTTPClient.post` only scans dict bodies for API keys |
+| BUG-26 | [04-autonomous-os-deep-audit.md#bug-26--systemcontrollerstart-leaves-the-log-file-handle-open-after-popen](./04-autonomous-os-deep-audit.md#bug-26--systemcontrollerstart-leaves-the-log-file-handle-open-after-popen) | `start()` keeps log file handle open after `Popen` |
+| BUG-27 | [04-autonomous-os-deep-audit.md#bug-27--two-parallel-memory-cleaner-implementations](./04-autonomous-os-deep-audit.md#bug-27--two-parallel-memory-cleaner-implementations) | Duplicate memory cleaner modules (`cleaner` vs `memory_cleaner`) |
 
 **Source tree roots referenced:** `agent-system/`, `volcano/` (relative to autoBottle monorepo root).
 
