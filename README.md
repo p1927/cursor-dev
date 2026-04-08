@@ -36,3 +36,5 @@ Paths in `agentmesh/README.md` assume your cwd is `agentmesh/` inside this repo.
 ## VOLCANO
 
 Upstream docs for the manager/worker queue: parent directory [`../README.md`](../README.md).
+
+**Autonomy stack** (Mesh + delegate + push): [`docs/AUTONOMY.md`](docs/AUTONOMY.md) and parent [`../AUTONOMY.md`](../AUTONOMY.md).
