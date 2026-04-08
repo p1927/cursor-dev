@@ -7,13 +7,24 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+  <div id="pvz-frame">
   <div id="hud">
-    <div id="sun-display" aria-live="polite"><span class="sun-icon">☀</span> <span id="sun-count">50</span></div>
-    <div id="seed-bar"></div>
-    <div id="wave-display">Wave <span id="wave-num">1</span></div>
+    <div id="sun-well" aria-live="polite">
+      <div class="sun-well-inner">
+        <span class="sun-icon" aria-hidden="true">☀</span>
+        <span id="sun-count" class="sun-number">50</span>
+      </div>
+    </div>
+    <div id="seed-trough">
+      <div id="seed-bar"></div>
+    </div>
+    <div id="wave-display">
+      <span class="wave-label">Wave</span>
+      <span id="wave-num" class="wave-num">1</span>
+    </div>
   </div>
   <div id="canvas-wrap">
-    <canvas id="game" width="920" height="520" aria-label="Lawn"></canvas>
+    <canvas id="game" width="920" height="562" aria-label="Lawn"></canvas>
   </div>
   <div id="overlay" class="hidden">
     <div class="panel">
@@ -24,10 +35,11 @@
   </div>
   <section id="help" class="help" aria-label="How to play">
     <p id="hint">
-      <strong>Play:</strong> Click a seed packet, then an <em>empty</em> grass tile to plant.
-      Click suns to collect them. Survive every wave—zombies that reach the house end the run.
+      <strong>Play:</strong> Tap or click a seed packet, then an <em>empty</em> grass tile to plant.
+      Tap suns to collect them. Survive every wave—zombies that reach the house end the run.
     </p>
   </section>
+  </div>
   <script src="js/config.js"></script>
   <script src="js/entities.js"></script>
   <script src="js/game.js"></script>

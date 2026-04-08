@@ -75,12 +75,21 @@
       const waveEl = document.getElementById("wave-num");
       if (sunEl) sunEl.textContent = String(this.sun);
       if (waveEl) waveEl.textContent = String(this.wave);
+      if (
+        this.selected &&
+        this.sun < C.PLANTS[this.selected].cost
+      ) {
+        this.selected = null;
+      }
       document.querySelectorAll(".seed-packet").forEach((el) => {
         const t = el.dataset.type;
         if (!t) return;
         const cost = C.PLANTS[t].cost;
-        el.classList.toggle("disabled", this.sun < cost);
+        const cant = this.sun < cost;
+        el.classList.toggle("disabled", cant);
+        el.disabled = cant;
         el.classList.toggle("selected", this.selected === t);
+        el.setAttribute("aria-pressed", this.selected === t ? "true" : "false");
       });
     }
 
@@ -108,7 +117,7 @@
       for (let i = this.suns.length - 1; i >= 0; i--) {
         const s = this.suns[i];
         const d = Math.hypot(mx - s.x, my - s.y);
-        if (d < 38) {
+        if (d < 44) {
           this.sun += s.value;
           this.suns.splice(i, 1);
           this._syncHUD();
@@ -216,7 +225,7 @@
         }
 
         const mower = this.mowers[z.row];
-        const mowerTriggerX = C.HOUSE_X + 52;
+        const mowerTriggerX = C.MOWER_X + 6;
         if (mower.active && !mower.fired && z.x <= mowerTriggerX) {
           mower.fired = true;
           mower.active = false;
@@ -322,33 +331,114 @@
     draw() {
       const ctx = this.ctx;
       const w = this.canvas.width;
-      const h = this.canvas.height;
+      const gy = C.GRID_Y;
 
-      const grd = ctx.createLinearGradient(0, 0, 0, h);
-      grd.addColorStop(0, "#7ec850");
-      grd.addColorStop(0.45, "#5cb83a");
-      grd.addColorStop(1, "#3d8c2e");
-      ctx.fillStyle = grd;
-      ctx.fillRect(0, 0, w, h);
+      // Day-level sky (PvZ1-style cyan → horizon), full width above lawn
+      const sky = ctx.createLinearGradient(0, 0, 0, gy);
+      sky.addColorStop(0, "#6ec0e8");
+      sky.addColorStop(0.55, "#8ed4f0");
+      sky.addColorStop(1, "#b8e8c8");
+      ctx.fillStyle = sky;
+      ctx.fillRect(0, 0, w, gy);
 
-      ctx.fillStyle = "rgba(0,0,0,0.06)";
+      // Soft cloud puffs (decorative, low contrast)
+      ctx.fillStyle = "rgba(255,255,255,0.35)";
+      [
+        [120, 28, 52],
+        [340, 22, 44],
+        [560, 34, 48],
+        [780, 26, 40],
+      ].forEach(([cx, cy, rw]) => {
+        ctx.beginPath();
+        ctx.arc(cx - rw * 0.35, cy, rw * 0.28, 0, Math.PI * 2);
+        ctx.arc(cx, cy - 4, rw * 0.32, 0, Math.PI * 2);
+        ctx.arc(cx + rw * 0.38, cy, rw * 0.3, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // Full-width mowed lawn stripes (matches PvZ day level)
+      const lawnH = C.ROWS * C.CELL_H;
+      const lawnW = C.COLS * C.CELL_W;
+      const stripeA = "#7dc64e";
+      const stripeB = "#69b038";
       for (let r = 0; r < C.ROWS; r++) {
-        const y = C.GRID_Y + r * C.CELL_H;
-        ctx.fillRect(0, y + C.CELL_H - 3, w, 3);
+        const y = gy + r * C.CELL_H;
+        ctx.fillStyle = r % 2 === 0 ? stripeA : stripeB;
+        ctx.fillRect(0, y, w, C.CELL_H);
+        ctx.strokeStyle = "rgba(30, 70, 22, 0.2)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(0, y + 0.5);
+        ctx.lineTo(w, y + 0.5);
+        ctx.stroke();
       }
+
+      const pathL = C.HOUSE_X + 48;
+      const pathR = C.GRID_X - 4;
+      ctx.fillStyle = "#6f6f6f";
+      ctx.fillRect(pathL, gy, pathR - pathL, lawnH);
+      ctx.fillStyle = "rgba(255,255,255,0.06)";
+      ctx.fillRect(pathL + 2, gy, pathR - pathL - 4, lawnH);
+      ctx.strokeStyle = "rgba(0,0,0,0.2)";
+      ctx.strokeRect(pathL + 0.5, gy + 0.5, pathR - pathL - 1, lawnH - 1);
+
+      const lawnGrd = ctx.createLinearGradient(C.GRID_X, gy, C.GRID_X + lawnW, gy);
+      lawnGrd.addColorStop(0, "rgba(0,0,0,0.05)");
+      lawnGrd.addColorStop(0.5, "rgba(255,255,255,0)");
+      lawnGrd.addColorStop(1, "rgba(0,0,0,0.05)");
+      ctx.fillStyle = lawnGrd;
+      ctx.fillRect(C.GRID_X, gy, lawnW, lawnH);
 
       for (let r = 0; r < C.ROWS; r++) {
         for (let c = 0; c < C.COLS; c++) {
           const x = C.GRID_X + c * C.CELL_W;
-          const y = C.GRID_Y + r * C.CELL_H;
-          ctx.strokeStyle = "rgba(30,80,20,0.18)";
+          const y = gy + r * C.CELL_H;
+          ctx.strokeStyle = "rgba(20, 55, 15, 0.18)";
           ctx.lineWidth = 1;
           ctx.strokeRect(x + 0.5, y + 0.5, C.CELL_W - 1, C.CELL_H - 1);
         }
       }
 
+      // House (beige siding + gable roof + window) — drawn over lawn/path edge
+      const hx = 6;
+      const hw = C.HOUSE_X + 26;
+      const roofH = 40;
+      ctx.fillStyle = "#d7ccc8";
+      ctx.fillRect(hx, gy + roofH - 4, hw, lawnH - roofH + 8);
+      for (let i = 0; i < 7; i++) {
+        ctx.strokeStyle = "rgba(78, 52, 46, 0.35)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(hx + 8 + i * 14, gy + roofH);
+        ctx.lineTo(hx + 8 + i * 14, gy + lawnH + 2);
+        ctx.stroke();
+      }
+      ctx.fillStyle = "#b71c1c";
+      ctx.beginPath();
+      ctx.moveTo(hx - 2, gy + roofH);
+      ctx.lineTo(hx + hw * 0.52, gy + 2);
+      ctx.lineTo(hx + hw + 6, gy + roofH);
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = "#7f0000";
+      ctx.lineWidth = 2;
+      ctx.stroke();
       ctx.fillStyle = "#5d4037";
-      ctx.fillRect(8, C.GRID_Y, C.HOUSE_X + 18, C.ROWS * C.CELL_H);
+      ctx.fillRect(hx + 14, gy + roofH + 8, 26, 42);
+      ctx.fillStyle = "#3e2723";
+      ctx.fillRect(hx + 18, gy + roofH + 46, 18, 8);
+      ctx.fillStyle = "#fff9c4";
+      ctx.fillRect(hx + 44, gy + roofH + 10, 34, 28);
+      ctx.strokeStyle = "#4e342e";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(hx + 44, gy + roofH + 10, 34, 28);
+      ctx.strokeStyle = "#6d4c41";
+      ctx.beginPath();
+      ctx.moveTo(hx + 61, gy + roofH + 10);
+      ctx.lineTo(hx + 61, gy + roofH + 38);
+      ctx.moveTo(hx + 44, gy + roofH + 24);
+      ctx.lineTo(hx + 78, gy + roofH + 24);
+      ctx.stroke();
 
       for (const m of this.mowers) {
         if (!m.active && m.fired) continue;
@@ -392,6 +482,9 @@
         ctx.beginPath();
         ctx.arc(pea.x, pea.y, 7, 0, Math.PI * 2);
         ctx.fill();
+        ctx.strokeStyle = "#1b5e20";
+        ctx.lineWidth = 2;
+        ctx.stroke();
         ctx.fillStyle = "#c5e1a5";
         ctx.beginPath();
         ctx.arc(pea.x - 3, pea.y, 3, 0, Math.PI * 2);

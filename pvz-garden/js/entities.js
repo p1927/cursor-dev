@@ -64,7 +64,7 @@
     constructor(row, yCenter) {
       this.row = row;
       this.active = true;
-      this.x = C.HOUSE_X + 8;
+      this.x = C.MOWER_X;
       this.y = yCenter;
       this.fired = false;
       this.speed = 0;

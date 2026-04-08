@@ -29,9 +29,22 @@ A **`*.trycloudflare.com`** URL is printed in the terminal. Open it in your brow
 
 ## Controls
 
-1. Click a **seed packet** (top bar) if you have enough sun.
-2. Click a **grass cell** to plant.
-3. Click **falling / sunflower suns** to collect (+25).
+1. Tap or click a **seed packet** (top bar) if you have enough sun.
+2. Tap or click a **grass cell** on the lawn to plant.
+3. Tap **falling / sunflower suns** to collect (+25).
+
+Input uses **pointer events** on the canvas (works for touch and mouse). Seed packets are real `<button>` elements (≥44px touch targets on the main control face + full packet chrome).
+
+## Look & feel (PvZ1 day level)
+
+The playfield is drawn on canvas to echo **Plants vs. Zombies** (original PC day stage), not a pixel-perfect clone:
+
+- **Sky** — cyan → soft horizon gradient above the lawn, with light cloud shapes.
+- **Lawn** — alternating **horizontal lane stripes** (`#5aad38` / `#62bf42`) in the grid only, plus subtle shading and row separators.
+- **House** — left strip: path/siding, red **roof wedge**, door, and window (readable “brains” side).
+- **HUD** — wood-grain seed trough, oval **sun** counter, paper-style **wave** badge (see `css/style.css`).
+
+Tweak `js/game.js` `draw()` colors or `css/style.css` `:root` if you match reference screenshots more closely.
 
 ## VOLCANO
 

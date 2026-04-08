@@ -5,8 +5,12 @@ window.PVZ_CONFIG = {
   CELL_W: 82,
   CELL_H: 92,
   GRID_X: 260,
-  GRID_Y: 28,
+  /** Lawn starts below in-canvas sky band (PvZ day level look). */
+  SKY_HEIGHT: 78,
+  GRID_Y: 82,
   HOUSE_X: 32,
+  /** Lawn mower idle X (driveway edge, matches canvas path). */
+  MOWER_X: 78,
   MOWER_W: 36,
   STARTING_SUN: 50,
   SUN_VALUE: 25,

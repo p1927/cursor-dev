@@ -15,10 +15,16 @@
     const order = ["sunflower", "peashooter", "wallnut"];
     for (const id of order) {
       const def = C.PLANTS[id];
-      const el = document.createElement("div");
+      const el = document.createElement("button");
+      el.type = "button";
       el.className = `seed-packet seed-${id}`;
       el.dataset.type = id;
-      el.innerHTML = `<span>${def.name}</span><div class="cost">${def.cost}</div>`;
+      el.setAttribute(
+        "aria-label",
+        `${def.name}, cost ${def.cost} sun. Select to plant.`
+      );
+      el.setAttribute("aria-pressed", "false");
+      el.innerHTML = `<div class="pkt-face pkt-face-${id}" aria-hidden="true"></div><div class="pkt-cost"><span>${def.cost}</span></div>`;
       el.addEventListener("click", () => game.selectPlant(id));
       bar.appendChild(el);
     }
@@ -34,10 +40,12 @@
     };
   }
 
-  canvas.addEventListener("click", (ev) => {
+  function onCanvasPrimaryPointer(ev) {
+    if (!ev.isPrimary) return;
     const { x, y } = canvasCoords(ev);
     game.onClick(x, y);
-  });
+  }
+  canvas.addEventListener("pointerdown", onCanvasPrimaryPointer);
 
   btnRestart.addEventListener("click", () => {
     overlay.classList.add("hidden");
