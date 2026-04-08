@@ -21,6 +21,12 @@ Read-only audit of the **autoBottle** workspace (parent monorepo containing `age
 | BUG-11 | [01-documentation-and-naming.md](./01-documentation-and-naming.md) | Product naming drift: `autoBottle` / `autobottle` / `AutoBottle` |
 | BUG-12 | [02-agent-system-code.md](./02-agent-system-code.md) | `openclaw-entrypoint.sh` relies on `/proc/net/route` (Linux-specific) |
 | BUG-13 | [03-tooling-volcano-cursor-dev.md](./03-tooling-volcano-cursor-dev.md) | Nested `cursor-dev` repo ignored by parent `volcano/.gitignore` |
+| BUG-14 | [05-agent-executors-runner-audit.md](./05-agent-executors-runner-audit.md) | Executor-gateway vault load failures swallowed; app still serves |
+| BUG-15 | [05-agent-executors-runner-audit.md](./05-agent-executors-runner-audit.md) | OpenClaw lock cleanup unlinks on any exception |
+| BUG-16 | [05-agent-executors-runner-audit.md](./05-agent-executors-runner-audit.md) | Supervisor JSON recovery uses greedy `\{.*\}` regex |
+| BUG-17 | [05-agent-executors-runner-audit.md](./05-agent-executors-runner-audit.md) | Task queue `step_states` parse failure wipes all steps |
+| BUG-18 | [05-agent-executors-runner-audit.md](./05-agent-executors-runner-audit.md) | Executor-gateway `Popen` child not waited (reaping unclear) |
+| BUG-19 | [05-agent-executors-runner-audit.md](./05-agent-executors-runner-audit.md) | Runner `ServiceLauncher` doc says shell; uses `shlex`+exec |
 
 **Source tree roots referenced:** `agent-system/`, `volcano/` (relative to autoBottle monorepo root).
 
