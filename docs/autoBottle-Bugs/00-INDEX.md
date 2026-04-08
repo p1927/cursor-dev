@@ -40,6 +40,9 @@ Read-only audit of the **autoBottle** workspace (parent monorepo containing `age
 | BUG-30 | [04-autonomous-os-deep-audit.md](./04-autonomous-os-deep-audit.md) | Scheduler: empty suggestions on DB errors, no log |
 | BUG-31 | [04-autonomous-os-deep-audit.md](./04-autonomous-os-deep-audit.md) | Memory cleaner tunnel import failure → hardcoded log path |
 | BUG-32 | [04-autonomous-os-deep-audit.md](./04-autonomous-os-deep-audit.md) | Claude healer: optional harness import fails silently |
+| BUG-33 | [06-developer-tools-bridge-audit.md](./06-developer-tools-bridge-audit.md) | Bridge queue: `atexit` shutdown bare `except` |
+| BUG-34 | [06-developer-tools-bridge-audit.md](./06-developer-tools-bridge-audit.md) | Bridge `get_pending_count` returns 0 on any error |
+| BUG-35 | [06-developer-tools-bridge-audit.md](./06-developer-tools-bridge-audit.md) | Bridge `get_responses_count` returns 0 on any error |
 
 **Source tree roots referenced:** `agent-system/`, `volcano/` (relative to autoBottle monorepo root).
 
