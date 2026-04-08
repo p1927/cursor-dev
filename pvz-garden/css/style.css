@@ -1,0 +1,231 @@
+@import url("https://fonts.googleapis.com/css2?family=Francois+One&family=Nunito:wght@600;800&display=swap");
+
+:root {
+  --sky-top: #87ceeb;
+  --sky-bot: #b8e0f0;
+  --grass-dark: #3d7c2a;
+  --grass-light: #5cb83a;
+  --hud-bg: #5c3d1e;
+  --gold: #ffd54a;
+  --panel: #2d4a22;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bot) 35%, var(--grass-light) 35%, var(--grass-dark) 100%);
+  font-family: "Nunito", system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px;
+  color: #1a1a1a;
+}
+
+#hud {
+  width: 100%;
+  max-width: 920px;
+  background: linear-gradient(180deg, #8b6914 0%, var(--hud-bg) 40%, #3d2810 100%);
+  border: 4px solid #2a1f0f;
+  border-radius: 8px 8px 0 0;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.15);
+}
+
+#sun-display {
+  font-family: "Francois One", sans-serif;
+  font-size: 1.75rem;
+  color: var(--gold);
+  text-shadow: 2px 2px 0 #5c3d00;
+  min-width: 100px;
+}
+
+.sun-icon {
+  filter: drop-shadow(0 0 4px #ffeb3b);
+}
+
+#seed-bar {
+  display: flex;
+  gap: 6px;
+  flex: 1;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.seed-packet {
+  width: 64px;
+  height: 82px;
+  border: 3px solid #2a1810;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 4px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 1px 1px 0 #000;
+  transition: transform 0.08s, box-shadow 0.08s;
+  position: relative;
+  user-select: none;
+  font-family: inherit;
+  appearance: none;
+  background-origin: border-box;
+}
+
+.seed-packet:focus-visible {
+  outline: 3px solid #ffeb3b;
+  outline-offset: 2px;
+}
+
+.seed-packet .seed-name {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2px 3px 0;
+  font-size: 0.52rem;
+  line-height: 1.05;
+  width: 100%;
+}
+
+.seed-packet:hover:not(.disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 0 #1a1008;
+}
+
+.seed-packet.selected {
+  outline: 3px solid #ffeb3b;
+  outline-offset: 2px;
+}
+
+.seed-packet.disabled {
+  filter: grayscale(0.85) brightness(0.7);
+  cursor: not-allowed;
+  opacity: 0.85;
+}
+
+.seed-packet .cost {
+  background: rgba(0, 0, 0, 0.45);
+  width: 100%;
+  text-align: center;
+  padding: 2px 0;
+  border-radius: 0 0 4px 4px;
+}
+
+.seed-sunflower {
+  background: linear-gradient(180deg, #ffe082 0%, #f9a825 35%, #5d4037 100%);
+}
+
+.seed-peashooter {
+  background: linear-gradient(180deg, #81c784 0%, #2e7d32 40%, #5d4037 100%);
+}
+
+.seed-wallnut {
+  background: linear-gradient(180deg, #d7ccc8 0%, #6d4c41 45%, #5d4037 100%);
+}
+
+#wave-display {
+  font-family: "Francois One", sans-serif;
+  color: #ffcc80;
+  font-size: 1.1rem;
+  text-shadow: 1px 1px 0 #3e2723;
+}
+
+#canvas-wrap {
+  border: 4px solid #2a1f0f;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+canvas#game {
+  display: block;
+  background: #6abf4b;
+  cursor: crosshair;
+}
+
+.help {
+  max-width: 920px;
+  width: 100%;
+  margin-top: 12px;
+}
+
+#hint {
+  text-align: center;
+  color: #1b3d16;
+  font-size: 0.9rem;
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.45;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 8px;
+  border: 1px solid rgba(27, 61, 22, 0.25);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+#overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+#overlay.hidden {
+  display: none;
+}
+
+.panel {
+  background: linear-gradient(180deg, #558b2f 0%, var(--panel) 100%);
+  border: 4px solid #33691e;
+  border-radius: 12px;
+  padding: 28px 36px;
+  text-align: center;
+  color: #fff;
+  max-width: 400px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+}
+
+.panel h2 {
+  font-family: "Francois One", sans-serif;
+  margin: 0 0 12px;
+  font-size: 1.8rem;
+  color: #ffeb3b;
+  text-shadow: 2px 2px 0 #33691e;
+}
+
+.panel p {
+  margin: 0 0 20px;
+  line-height: 1.5;
+}
+
+#btn-restart {
+  font-family: "Francois One", sans-serif;
+  font-size: 1.1rem;
+  padding: 12px 28px;
+  background: linear-gradient(180deg, #ffca28 0%, #f57f17 100%);
+  border: 3px solid #e65100;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #3e2723;
+}
+
+#btn-restart:hover {
+  filter: brightness(1.08);
+}

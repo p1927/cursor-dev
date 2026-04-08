@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PVZ Garden — VOLCANO</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="hud">
+    <div id="sun-display" aria-live="polite"><span class="sun-icon">☀</span> <span id="sun-count">50</span></div>
+    <div id="seed-bar"></div>
+    <div id="wave-display">Wave <span id="wave-num">1</span></div>
+  </div>
+  <div id="canvas-wrap">
+    <canvas id="game" width="920" height="520" aria-label="Lawn"></canvas>
+  </div>
+  <div id="overlay" class="hidden">
+    <div class="panel">
+      <h2 id="overlay-title"></h2>
+      <p id="overlay-msg"></p>
+      <button type="button" id="btn-restart">Play Again</button>
+    </div>
+  </div>
+  <section id="help" class="help" aria-label="How to play">
+    <p id="hint">
+      <strong>Play:</strong> Click a seed packet, then an <em>empty</em> grass tile to plant.
+      Click suns to collect them. Survive every wave—zombies that reach the house end the run.
+    </p>
+  </section>
+  <script src="js/config.js"></script>
+  <script src="js/entities.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
