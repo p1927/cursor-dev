@@ -35,6 +35,11 @@ Read-only audit of the **autoBottle** workspace (parent monorepo containing `age
 | BUG-25 | [04-autonomous-os-deep-audit.md#bug-25--guarded-http-client-skips-outbound-secret-scan-for-non-dict-bodies](./04-autonomous-os-deep-audit.md#bug-25--guarded-http-client-skips-outbound-secret-scan-for-non-dict-bodies) | `GuardedHTTPClient.post` only scans dict bodies for API keys |
 | BUG-26 | [04-autonomous-os-deep-audit.md#bug-26--systemcontrollerstart-leaves-the-log-file-handle-open-after-popen](./04-autonomous-os-deep-audit.md#bug-26--systemcontrollerstart-leaves-the-log-file-handle-open-after-popen) | `start()` keeps log file handle open after `Popen` |
 | BUG-27 | [04-autonomous-os-deep-audit.md#bug-27--two-parallel-memory-cleaner-implementations](./04-autonomous-os-deep-audit.md#bug-27--two-parallel-memory-cleaner-implementations) | Duplicate memory cleaner modules (`cleaner` vs `memory_cleaner`) |
+| BUG-28 | [04-autonomous-os-deep-audit.md](./04-autonomous-os-deep-audit.md) | Update snapshot `check_cmd` errors swallowed (`applier`) |
+| BUG-29 | [04-autonomous-os-deep-audit.md](./04-autonomous-os-deep-audit.md) | Scheduler probe: any exception → “dead” model |
+| BUG-30 | [04-autonomous-os-deep-audit.md](./04-autonomous-os-deep-audit.md) | Scheduler: empty suggestions on DB errors, no log |
+| BUG-31 | [04-autonomous-os-deep-audit.md](./04-autonomous-os-deep-audit.md) | Memory cleaner tunnel import failure → hardcoded log path |
+| BUG-32 | [04-autonomous-os-deep-audit.md](./04-autonomous-os-deep-audit.md) | Claude healer: optional harness import fails silently |
 
 **Source tree roots referenced:** `agent-system/`, `volcano/` (relative to autoBottle monorepo root).
 

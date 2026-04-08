@@ -92,6 +92,64 @@ Read-only static review of `agent-system/autonomous_os/**/*.py` (no `.sh` files 
 
 ---
 
+## BUG-28 — Snapshot `check_cmd` failures are silently dropped
+
+**In `snapshot_layer`, when `layer.check_cmd` is set, `subprocess.run` errors are caught with `except Exception: pass` (no log).**  
+**Version snapshots can be written as empty placeholders while operators assume the probe ran.**
+
+**Location:** `agent-system/autonomous_os/updates/applier.py` — lines **55–56**.
+
+**Severity:** Low (observability / update traceability).  
+*Related to **BUG-22** (same module; this is the silent-exception path specifically.)*
+
+---
+
+## BUG-29 — Model route check mislabels transient failures as “dead” models
+
+**The OpenRouter probe loop uses `except Exception: dead.append(model)` for any HTTP client error.**  
+**Timeouts and DNS blips are reported as dead models and can trigger replacement alerts incorrectly.**
+
+**Location:** `agent-system/autonomous_os/scheduler/scheduler.py` — lines **772–773**.
+
+**Severity:** Medium (operational false positives).
+
+---
+
+## BUG-30 — Replacement suggestions vanish silently on DB errors
+
+**`ModelCatalogDB.suggest_replacements` is wrapped in `except Exception: suggestions = {}` without logging in that branch.**  
+**Dead-model Telegram alerts lose replacement hints with no explanation.**
+
+**Location:** `agent-system/autonomous_os/scheduler/scheduler.py` — lines **803–804**.
+
+**Severity:** Low (alert UX).
+
+---
+
+## BUG-31 — Tunnel log path fallback masks import failures
+
+**If importing `tgbot.miniapp.tunnel` fails for any reason, the cleaner assumes a fixed `/tmp/cloudflared-tunnel.log` path.**  
+**Broken deployments look like “wrong log file” instead of “tunnel module failed to import”.**
+
+**Location:** `agent-system/autonomous_os/memory/memory_cleaner.py` — lines **182–187**.
+
+**Severity:** Low (diagnostics).
+
+---
+
+## BUG-32 — Claude healer drops `code_context` without notice
+
+**Optional `harness.code_context` import is wrapped in bare `except Exception`; failure sets `_code_ctx = None` with no warning at default log levels.**  
+**Healing prompts silently lose structured code context.**
+
+**Location:** `agent-system/autonomous_os/healing/claude_healer.py` — lines **41–46**.
+
+**Severity:** Low (silent degradation).
+
+---
+
 ## Coverage note
 
 All **64** `*.py` files under `agent-system/autonomous_os/` were included in this pass (listing + targeted reads and `rg` for subprocess/shell/TODO/exception patterns). Findings above are **additional** to BUG-03, BUG-04, and BUG-07, which already reference `autonomous_os` paths in [02-agent-system-code.md](./02-agent-system-code.md).
+
+**Manager merge (VOLCANO):** **BUG-28–BUG-32** were added after Worker 2’s deep pass to close gaps without renumbering **BUG-20–BUG-27**.
