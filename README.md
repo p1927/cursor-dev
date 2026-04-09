@@ -2,15 +2,15 @@
 
 **Remote:** https://github.com/p1927/cursor-dev  
 
-Cursor-oriented utilities. This git repository is nested under the **VOLCANO** orchestration tree:
+Cursor-oriented utilities. This repository root holds **VOLCANO** orchestration and product trees side by side:
 
 ```
-volcano/
-  cursor-dev/          ← this repo (you are here)
-    agentmesh/         ← HTTP + SQLite hub for multiple Cursor CLI agents
-  queue/
-  prompts/
-  ...
+./
+  volcano/           ← file queue, prompts, worker scripts
+  agentmesh/         ← HTTP + SQLite hub for multiple Cursor CLI agents
+  docs/
+  pvz-garden/
+  Developer-Tools/   ← nested clone (gitignored here; own remote)
 ```
 
 ## AgentMesh
@@ -35,6 +35,6 @@ Paths in `agentmesh/README.md` assume your cwd is `agentmesh/` inside this repo.
 
 ## VOLCANO
 
-Upstream docs for the manager/worker queue: parent directory [`../README.md`](../README.md).
+Orchestration docs: [`volcano/README.md`](volcano/README.md).
 
-**Autonomy stack** (Mesh + delegate + push): [`docs/AUTONOMY.md`](docs/AUTONOMY.md) and parent [`../AUTONOMY.md`](../AUTONOMY.md).
+**Autonomy stack** (Mesh + delegate + push): [`docs/AUTONOMY.md`](docs/AUTONOMY.md) and [`volcano/AUTONOMY.md`](volcano/AUTONOMY.md).

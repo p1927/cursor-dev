@@ -1,3 +1,6 @@
 .DS_Store
 *.pyc
 __pycache__/
+
+# Nested clone (own remote) — do not vendor into cursor-dev
+Developer-Tools/

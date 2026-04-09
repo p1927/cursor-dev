@@ -1,0 +1,8 @@
+# Ephemeral VOLCANO state (keep directory structure via .gitkeep)
+runtime/
+queue/pending/*.json
+queue/claimed/w*.json
+archive/done/w*.json
+results/*.md
+scratch/*
+!scratch/.gitkeep
